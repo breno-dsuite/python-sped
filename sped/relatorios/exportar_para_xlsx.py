@@ -2,7 +2,7 @@
 
 python_sped_relatorios_author='Claudio Fernandes de Souza Rodrigues (claudiofsr@yahoo.com)'
 python_sped_author='Sergio Garcia (sergio@ginx.com.br)'
-date='16 de Março de 2020 (início: 10 de Janeiro de 2020)'
+date='28 de Março de 2020 (início: 10 de Janeiro de 2020)'
 download_url='https://github.com/claudiofsr/python-sped'
 license='MIT'
 
@@ -39,14 +39,14 @@ class Exportar_Excel:
 
 		workbook.set_properties({
 			'title':    str(self.output_excel)[:-5],
-			'subject':  'Informações obtidas de arquivos SPED (http://sped.rfb.gov.br)',
+			'subject':  '',
 			'author':   '',
 			'manager':  '',
 			'company':  '',
-			'category': download_url,
+			'category': 'Arquivos SPED EFD (http://sped.rfb.gov.br)',
 			'keywords': 'SPED (Sistema Público de Escrituração Digital), EFD Contribuições, EFD ICMS_IPI',
-			'comments': 'Created with XlsxWriter and Python Sped: ' + \
-						python_sped_author + ' & '+ python_sped_relatorios_author
+			'comments': 'Created with XlsxWriter and Python Sped (relatorios) ' + \
+						download_url + ' ('+ python_sped_relatorios_author + ')'
 		})
 
 		# Set up some formatting
@@ -62,7 +62,7 @@ class Exportar_Excel:
 
 		select_format = My_Switch(SPED_EFD_Info.registros_totais,verbose=self.verbose)
 		select_format.formatar_colunas_do_arquivo_excel(workbook)
-		myFormat = select_format.dicionario
+		myColumn = select_format.dicionario
 
 		# Para cada efd_tipo, obter a largura máxima de cada coluna
 		largura_max = {}
@@ -112,15 +112,19 @@ class Exportar_Excel:
 				
 				for column_index, (column_name, value) in enumerate(dicionario.items(), 0):
 
+					valor_formatado = value
+
 					if len( str(value) ) > 0:
-						worksheet.write(num_linha, column_index, myValue[column_name](value), myFormat[column_name])
+						valor_formatado  = myValue[column_name](value)
+						coluna_formatada = myColumn[column_name]
+						worksheet.write(num_linha, column_index, valor_formatado, coluna_formatada)
 					else:
 						# Write cell with row/column notation.
 						worksheet.write(num_linha, column_index, value)
 					
 					# reter largura máxima
-					if len( str(value) ) > largura_max[worksheet_name][column_name]:
-						largura_max[worksheet_name][column_name] = len( str(value) )
+					if len( str(valor_formatado) ) > largura_max[worksheet_name][column_name]:
+						largura_max[worksheet_name][column_name] = len( str(valor_formatado) )
 		
 		# configurações finais de cada aba
 		for worksheet in workbook.worksheets():
@@ -129,18 +133,28 @@ class Exportar_Excel:
 			worksheet_name = worksheet.get_name()
 
 			# definindo a altura da primeira linha, row_index == 0
-			worksheet.set_row(0, 40)
+			worksheet.set_row(0, 42)
 
 			# Freeze pane on the top row.
 			worksheet.freeze_panes(1, 0)
 
 			# Ajustar largura das colunas com os valores máximos
-			largura_min = 2
+			largura_min = 4
 			for index, (column_name, width) in enumerate(largura_max[worksheet_name].items(),0):
-				match_periodo = re.search(r'Período de Apuração', column_name, flags=re.IGNORECASE)
-				if match_periodo:
-					width = 12
+				match_periodo   = re.search(r'Período de Apuração', column_name, flags=re.IGNORECASE)
+				match_valor     = re.search(r'Valor|VL_|Percentual', column_name, flags=re.IGNORECASE)
+				match_vinculado = re.search(r'vinculad(a|o) à Receita', column_name, flags=re.IGNORECASE)
+				if match_periodo and width > 14:
+					largura_min = 0
+					width = 14
+				if match_valor and width > 16:
+					largura_min = 0
+					width = 16
+				if match_vinculado and width > 20:
+					largura_min = 0
+					width = 20
 				if width > 120: # largura máxima
+					largura_min = 0
 					width = 120
 				worksheet.set_column(index, index, width + largura_min)
 			

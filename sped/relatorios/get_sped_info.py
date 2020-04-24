@@ -2,7 +2,7 @@
 
 python_sped_relatorios_author='Claudio Fernandes de Souza Rodrigues (claudiofsr@yahoo.com)'
 python_sped_author='Sergio Garcia (sergio@ginx.com.br)'
-date='16 de Março de 2020 (início: 10 de Janeiro de 2020)'
+date='20 de Abril de 2020 (início: 10 de Janeiro de 2020)'
 download_url='https://github.com/claudiofsr/python-sped'
 license='MIT'
 
@@ -59,22 +59,35 @@ class SPED_EFD_Info:
 		'VL_BC_EST', 'VL_TOT_REC', 'VL_REC_CAIXA', 'VL_REC_COMP', 'VL_REC', 'VL_ITEM']
 	
 	colunas_de_rateio = [
-		'RBNC - Tributado no MI',  'RBNC - Não Tributado no MI',  'RBNC - de Exportação', 
-		'Receita Bruta Cumulativa'
+		'Classificação da Receita Bruta', 'Percentual de Rateio dos Créditos',
+		'RBNC Trib MI', 'RBNC Não Trib MI', 'RBNC de Exportação',
+		'Receita Bruta Total',
+		'Base de Cálculo dos Créditos vinculada à Receita Tributada no MI', 
+		'Base de Cálculo dos Créditos vinculada à Receita Não Tributada no MI',
+		'Base de Cálculo dos Créditos vinculada à Receita de Exportação', 
+		'Base de Cálculo dos Créditos vinculada à Receita Bruta Cumulativa',
+		'Crédito de PIS/PASEP vinculado à Receita Tributada no MI', 
+		'Crédito de PIS/PASEP vinculado à Receita Não Tributada no MI',
+		'Crédito de PIS/PASEP vinculado à Receita de Exportação', 
+		'Crédito de PIS/PASEP vinculado à Receita Bruta Cumulativa',
+		'Crédito de COFINS vinculado à Receita Tributada no MI',
+		'Crédito de COFINS vinculado à Receita Não Tributada no MI',
+		'Crédito de COFINS vinculado à Receita de Exportação', 
+		'Crédito de COFINS vinculado à Receita Bruta Cumulativa',
 	]
 
-	colunas_adicionais = ['Trimestre do Período de Apuração', 'Tipo de Crédito']
+	colunas_adicionais = ['Trimestre do Período de Apuração','IND_ORIG_CRED']
 
 	# Imprimir as informações desta coluna, nesta ordem
 	colunas_selecionadas = [
-		'Linhas', 'EFD Tipo', 'Arquivo da SPED EFD', 'Nº da Linha da EFD', 'CNPJ Base', 'CNPJ', 'NOME', 
-		'Mês do Período de Apuração', 'Ano do Período de Apuração', 'Tipo de Operação', 'IND_ORIG_CRED', 
-		'REG', 'CST_PIS_COFINS', 'NAT_BC_CRED', 'CFOP', 'COD_PART', *registros_de_cadastro_do_participante, 
-		'CNPJ_CPF_PART', 'Data de Emissão', 'Data de Execução', 'COD_ITEM', 
-		*registros_de_identificacao_do_item, 'Chave Eletrônica', 'COD_MOD', 'NUM_DOC', 'NUM_ITEM', 
-		'COD_CTA', *registros_de_plano_de_contas, 'Valor do Item', 'VL_BC_PIS', 'VL_BC_COFINS', 
-		'ALIQ_PIS', 'ALIQ_COFINS', 'VL_PIS', 'VL_COFINS', 'VL_ISS', 
-		'CST_ICMS', 'VL_BC_ICMS', 'ALIQ_ICMS', 'VL_ICMS', 
+		'Linhas', 'EFD Tipo', 'Arquivo da SPED EFD', 'Nº da Linha da EFD', 'CNPJ Base', 'CNPJ', 
+		'NOME', 'Mês do Período de Apuração', 'Ano do Período de Apuração', 'Tipo de Operação',
+		'Tipo de Crédito', 'REG', 'CST_PIS_COFINS', 'NAT_BC_CRED', 'CFOP', 'COD_PART', 
+		*registros_de_cadastro_do_participante, 'CNPJ_CPF_PART', 'Data de Emissão', 'Data de Execução', 
+		'COD_ITEM', *registros_de_identificacao_do_item, 'Chave Eletrônica', 'COD_MOD', 'NUM_DOC', 
+		'NUM_ITEM', 'COD_CTA', *registros_de_plano_de_contas, 'Valor do Item', 
+		'VL_BC_PIS', 'VL_BC_COFINS', 'ALIQ_PIS', 'ALIQ_COFINS', 'VL_PIS', 'VL_COFINS', 
+		'VL_ISS', 'CST_ICMS', 'VL_BC_ICMS', 'ALIQ_ICMS', 'VL_ICMS', 
 		# 'VL_ICMS_RECOLHER', 'VL_ICMS_RECOLHER_OA'
 	]
 	
@@ -101,7 +114,7 @@ class SPED_EFD_Info:
 				2403,2652,3102,3251,3652,
 			]:
 			# Código 01 - CFOP de 'Aquisição de Bens para Revenda'
-			info[cfop] = 1
+			info[cfop] = '01' # padronizar: string de dois dígitos
 		for cfop in [
 				1101,1111,1116,1120,1122,1126,1128,1132,
 				1135,1401,1407,1456,1556,1651,1653,2101,
@@ -110,20 +123,20 @@ class SPED_EFD_Info:
 				3128,3556,3651,3653,
 			]:
 			# Código 02 - CFOP de 'Aquisição de Bens Utilizados como Insumo'
-			info[cfop] = 2
+			info[cfop] = '02'
 		for cfop in [1124,1125,1933,2124,2125,2933]:
 			# Código 03 - CFOP de 'Aquisição de Serviços Utilizados como Insumos'
-			info[cfop] = 3
+			info[cfop] = '03'
 		for cfop in [
 				1201,1202,1203,1204,1206,1207,1215,1216,
 				1410,1411,1660,1661,1662,2201,2202,2206,
 				2207,2215,2216,2410,2411,2660,2661,2662,
 			]:
 			# Código 12 - CFOP de 'Devolução de Vendas Sujeitas à Incidência Não-Cumulativa'
-			info[cfop] = 12
+			info[cfop] = '12'
 		for cfop in [1922,2922]:
 			# Código 13 - CFOP de 'Outras Operações com Direito a Crédito'
-			info[cfop] = 13
+			info[cfop] = '13'
 		
 		return info
 	
@@ -159,10 +172,10 @@ class SPED_EFD_Info:
 
 		self.efd_info_mensal = []
 	
-	def imprimir_arquivo_csv(self):
+	def obter_info_dos_itens(self):
 
 		select_object = My_Switch(type(self).registros_totais,verbose=self.verbose)
-		select_object.formatar_colunas_do_arquivo_csv()
+		select_object.formatar_valores_entrada()
 		self.myDict = select_object.dicionario
 						
 		self.objeto_sped.readfile(self.file_path, codificacao=self.encoding, verbose=self.verbose)
@@ -379,6 +392,69 @@ class SPED_EFD_Info:
 		
 		return info_de_abertura
 	
+	def obter_tipo_de_credito(self,dict_info):
+		''' 
+		Veja Tabela "4.3.6 - Tabela Código de Tipo de Crédito" e comentários do Campo 02 do Registro M100 do Guia PRÁTICO.
+		Os códigos dos tipos de créditos são definidos a partir das informações de CST e Alíquota constantes nos documentos e operações registrados nos blocos A, C, D e F.
+		Dentro dos grupos, a alíquota informada determina se o código será o 101 (alíquotas básicas), 102 (alíquotas diferenciadas), 103 (alíquotas em reais) ou 105 (embalagens para revenda).
+		Os códigos vinculados à importação (108, 208 e 308) são obtidos através da informação de CFOP iniciado em 3 (quando existente) ou pelo campo IND_ORIG_CRED nos demais casos.
+		O código 109 (atividade imobiliária) é obtido diretamente dos registros F205 e F210, bem como os códigos relativos ao estoque de abertura (104, 204 e 304), 
+		os quais são obtidos diretamente do registro F150 (NAT_BC_CRED = 18).
+		'''
+		tipo_de_credito = ''
+		aliq_basica_pis    = 1.6500 # 4 casas decimais
+		aliq_basica_cofins = 7.6000 # 4 casas decimais
+
+		percentual = {}
+		aliquotas_de_cred_presumido = {}
+
+		# A alíquota do crédito presumido é uma fração percentual da alíquota básica.
+		percentual[1] = 0.20 # Lei 10.925, Art. 8o, § 3o, inciso V.    # pis = 0.3300 ; confins = 1.5200
+		percentual[2] = 0.35 # Lei 10.925, Art. 8o, § 3o, inciso III.  # pis = 0.5775 ; confins = 2.6600
+		percentual[3] = 0.50 # Lei 10.925, Art. 8o, § 3o, inciso IV.   # pis = 0.8250 ; confins = 3.8000
+		percentual[4] = 0.60 # Lei 10.925, Art. 8o, § 3o, inciso I.    # pis = 0.9900 ; confins = 4.5600
+		percentual[5] = 0.10 # Lei 12.599, Art. 5o, § 1o  # pis = 0.1650 ; confins = 0.7600 --> crédito presumido - exportação de café, produtos com ncm 0901.1
+		percentual[6] = 0.80 # Lei 12.599, Art. 6o, § 2o  # pis = 1.3200 ; confins = 6.0800 --> crédito presumido - industrialização do café, aquisição dos produtos com ncm 0901.1 utilizados na elaboração dos produtos com 0901.2 e 2101.1
+
+		for key in percentual.keys():
+			alpis = f'{aliq_basica_pis    * percentual[key]:.4f}' # 4 casas decimais
+			alcof = f'{aliq_basica_cofins * percentual[key]:.4f}' # 4 casas decimais
+			chave = alpis + alcof
+			aliquotas_de_cred_presumido[chave] = 1
+
+		if (set(['ALIQ_PIS', 'ALIQ_COFINS','CST_PIS_COFINS','IND_ORIG_CRED']).issubset(dict_info) and
+			re.search(r'\d', dict_info['ALIQ_PIS']) and 
+			re.search(r'\d', dict_info['ALIQ_COFINS']) and
+			re.search(r'\d', dict_info['CST_PIS_COFINS'])
+		):
+			cst = int(dict_info['CST_PIS_COFINS'])
+			origem = int(dict_info['IND_ORIG_CRED'])
+
+			aliq_pis = My_Switch.formatar_valores_reais(dict_info['ALIQ_PIS'])
+			aliq_cof = My_Switch.formatar_valores_reais(dict_info['ALIQ_COFINS'])
+
+			if   origem == 0 and 50 <= cst <= 56:
+				tipo_de_credito = '01 - ' + EFD_Tabelas.tabela_tipo_de_credito['01']     # 'Alíquota Básica'
+				if aliq_pis != aliq_basica_pis or aliq_cof != aliq_basica_cofins:
+					tipo_de_credito = '02 - ' + EFD_Tabelas.tabela_tipo_de_credito['02'] # 'Alíquotas Diferenciadas'	
+				#print(f'{aliq_pis = } ; {aliq_basica_pis = } ; {aliq_cof = } ; {aliq_basica_cofins = } ; {tipo_de_credito = }\n')
+			elif origem == 0 and 60 <= cst <= 66:
+				aliq_pis = f'{aliq_pis:.4f}' # 4 casas decimais
+				aliq_cof = f'{aliq_cof:.4f}' # 4 casas decimais
+				chave = aliq_pis + aliq_cof
+				tipo_de_credito = '07 - ' + EFD_Tabelas.tabela_tipo_de_credito['07']     # 'Outros Créditos Presumidos'
+				if chave in aliquotas_de_cred_presumido:
+					tipo_de_credito = '06 - ' + EFD_Tabelas.tabela_tipo_de_credito['06'] # 'Presumido da Agroindústria'
+			elif origem == 1 and 50 <= cst <= 66:
+				tipo_de_credito = '08 - ' + EFD_Tabelas.tabela_tipo_de_credito['08']     # 'Importação'
+		
+		if 'NAT_BC_CRED' in dict_info and re.search(r'^\d+$', dict_info['NAT_BC_CRED']):
+			natureza = int(dict_info['NAT_BC_CRED'])
+			if natureza == 18:
+				tipo_de_credito = '09 - ' + EFD_Tabelas.tabela_tipo_de_credito['09']     # 'Atividade Imobiliária'
+
+		return tipo_de_credito
+	
 	def adicionar_informacoes(self,dict_info):
 		"""
 		Adicionar informações em dict_info
@@ -422,11 +498,14 @@ class SPED_EFD_Info:
 		# Índice de Origem do Crédito: Leia os comentários do 'Registro M100: Crédito de PIS/Pasep Relativo ao Período'.
 		# Os códigos vinculados à importação (108, 208 e 308) são obtidos através da informação de CFOP 
 		# iniciado em 3 (quando existente) ou pelo campo IND_ORIG_CRED nos demais casos.
-		indicador_de_origem = 'Mercado Interno' # Default Value: 0 - Mercado Interno ; 1 - Mercado Externo (Importação).
+		indicador_de_origem = 0 # Default Value: 0 - Mercado Interno ; 1 - Mercado Externo (Importação).
 		if (('CFOP' in dict_info and re.search(r'^3\d{3}', dict_info['CFOP'])) or
 			('IND_ORIG_CRED' in dict_info and dict_info['IND_ORIG_CRED'] == '1')):
-			indicador_de_origem = 'Mercado Externo (Importação)'
+			indicador_de_origem = 1
 		dict_info['IND_ORIG_CRED'] = indicador_de_origem
+
+		dict_info['Tipo de Crédito'] = self.obter_tipo_de_credito(dict_info)
+		del dict_info['IND_ORIG_CRED']
 
 		# Adicionar informação de cadastro do participante obtido do Registro 0150
 		# info_do_participante[codigo_do_participante][campo] = descricao
