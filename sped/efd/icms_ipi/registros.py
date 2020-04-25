@@ -164,7 +164,7 @@ class Registro0200(Registro):
         Campo(9, 'EX_IPI'),
         Campo(10, 'COD_GEN'),
         Campo(11, 'COD_LST'),
-        CampoNumerico(12, 'ALIQ_ICMS'),
+        CampoNumerico(12, 'ALIQ_ICMS', precisao=2),
         Campo(13, 'CEST'),
     ]
 
@@ -192,7 +192,7 @@ class Registro0206(Registro):
         CampoFixo(1, 'REG', '0206'),
         Campo(2, 'COD_COMB'),
     ]
-    
+
     nivel = 3
 
 class Registro0210(Registro):
@@ -202,8 +202,8 @@ class Registro0210(Registro):
     campos = [
         CampoFixo(1, 'REG', '0210'),
         Campo(2, 'COD_ITEM_COMP'),
-        CampoNumerico(3, 'QTD_COMP'),
-        CampoNumerico(4, 'PERDA'),
+        CampoNumerico(3, 'QTD_COMP', precisao=6),
+        CampoNumerico(4, 'PERDA', precisao=4),
     ]
 
     nivel = 3
@@ -338,7 +338,7 @@ class RegistroB001(Registro):
 
 class RegistroB020(Registro):
     """
-    NOTA FISCAL (CÓDIGO 01), NOTA FISCAL DE SERVIÇOS (CÓDIGO 03), 
+    NOTA FISCAL (CÓDIGO 01), NOTA FISCAL DE SERVIÇOS (CÓDIGO 03),
     NOTA FISCAL DE SERVIÇOS AVULSA (CÓDIGO 3B), NOTA FISCAL DE PRODUTOR
     (CÓDIGO 04), CONHECIMENTO DE TRANSPORTE RODOVIÁRIO DE CARGAS
     (CÓDIGO 08), NF-e (CÓDIGO 55) e NFC-e (CÓDIGO 65).
@@ -583,24 +583,24 @@ class RegistroC100(Registro):
         CampoChaveEletronica(9, 'CHV_NFE'),
         CampoData(10, 'DT_DOC'),
         CampoData(11, 'DT_E_S'),
-        CampoNumerico(12, 'VL_DOC'),
+        CampoNumerico(12, 'VL_DOC', precisao=2),
         Campo(13, 'IND_PGTO'),
-        CampoNumerico(14, 'VL_DESC'),
-        CampoNumerico(15, 'VL_ABAT_NT'),
-        CampoNumerico(16, 'VL_MERC'),
+        CampoNumerico(14, 'VL_DESC', precisao=2),
+        CampoNumerico(15, 'VL_ABAT_NT', precisao=2),
+        CampoNumerico(16, 'VL_MERC', precisao=2),
         Campo(17, 'IND_FRT'),
-        CampoNumerico(18, 'VL_FRT'),
-        CampoNumerico(19, 'VL_SEG'),
-        CampoNumerico(20, 'VL_OUT_DA'),
-        CampoNumerico(21, 'VL_BC_ICMS'),
-        CampoNumerico(22, 'VL_ICMS'),
-        CampoNumerico(23, 'VL_BC_ICMS_ST'),
-        CampoNumerico(24, 'VL_ICMS_ST'),
-        CampoNumerico(25, 'VL_IPI'),
-        CampoNumerico(26, 'VL_PIS'),
-        CampoNumerico(27, 'VL_COFINS'),
-        CampoNumerico(28, 'VL_PIS_ST'),
-        CampoNumerico(29, 'VL_COFINS_ST'),
+        CampoNumerico(18, 'VL_FRT', precisao=2),
+        CampoNumerico(19, 'VL_SEG', precisao=2),
+        CampoNumerico(20, 'VL_OUT_DA', precisao=2),
+        CampoNumerico(21, 'VL_BC_ICMS', precisao=2),
+        CampoNumerico(22, 'VL_ICMS', precisao=2),
+        CampoNumerico(23, 'VL_BC_ICMS_ST', precisao=2),
+        CampoNumerico(24, 'VL_ICMS_ST', precisao=2),
+        CampoNumerico(25, 'VL_IPI', precisao=2),
+        CampoNumerico(26, 'VL_PIS', precisao=2),
+        CampoNumerico(27, 'VL_COFINS', precisao=2),
+        CampoNumerico(28, 'VL_PIS_ST', precisao=2),
+        CampoNumerico(29, 'VL_COFINS_ST', precisao=2),
     ]
 
     nivel = 2
@@ -743,7 +743,7 @@ class RegistroC116(Registro):
 
 class RegistroC120(Registro):
     """
-    COMPLEMENTO DE DOCUMENTO - OPERAÇÕES DE IMPORTAÇÃO 
+    COMPLEMENTO DE DOCUMENTO - OPERAÇÕES DE IMPORTAÇÃO
     (CÓDIGOS 01 e 55)
     """
     campos = [
@@ -1003,7 +1003,7 @@ class RegistroC177(Registro):
         Campo(2, 'COD_SELO_IPI'),
         Campo(3, 'QT_SELO_IPI'),
     ]
-    
+
     nivel = 4
 
 class RegistroC178(Registro):
@@ -2023,7 +2023,7 @@ class RegistroD190(Registro):
         CampoNumerico(8, 'VL_RED_BC'),
         Campo(9, 'COD_OBS'),
     ]
-    
+
     nivel = 3
 
 class RegistroD195(Registro):
@@ -2647,7 +2647,7 @@ class RegistroE200(Registro):
         CampoData(3, 'DT_INI'),
         CampoData(4, 'DT_FIN'),
     ]
-    
+
     nivel = 2
 
 class RegistroE210(Registro):
