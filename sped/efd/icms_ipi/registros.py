@@ -850,40 +850,40 @@ class RegistroC170(Registro):
         CampoNumerico(2, 'NUM_ITEM', obrigatorio=True),
         Campo(3, 'COD_ITEM', obrigatorio=True),
         Campo(4, 'DESCR_COMPL'),
-        CampoNumerico(5, 'QTD'),
+        CampoNumerico(5, 'QTD', precisao=5),
         Campo(6, 'UNID'),
-        CampoNumerico(7, 'VL_ITEM', obrigatorio=True),
-        CampoNumerico(8, 'VL_DESC'),
+        CampoNumerico(7, 'VL_ITEM', obrigatorio=True, precisao=2),
+        CampoNumerico(8, 'VL_DESC', precisao=2),
         Campo(9, 'IND_MOV'),
         CampoNumerico(10, 'CST_ICMS'),
         CampoNumerico(11, 'CFOP', obrigatorio=True),
         Campo(12, 'COD_NAT'),
-        CampoNumerico(13, 'VL_BC_ICMS'),
-        CampoNumerico(14, 'ALIQ_ICMS'),
-        CampoNumerico(15, 'VL_ICMS'),
-        CampoNumerico(16, 'VL_BC_ICMS_ST'),
-        CampoNumerico(17, 'ALIQ_ST'),
-        CampoNumerico(18, 'VL_ICMS_ST'),
+        CampoNumerico(13, 'VL_BC_ICMS', precisao=2),
+        CampoNumerico(14, 'ALIQ_ICMS', precisao=2),
+        CampoNumerico(15, 'VL_ICMS', precisao=2),
+        CampoNumerico(16, 'VL_BC_ICMS_ST', precisao=2),
+        CampoNumerico(17, 'ALIQ_ST', precisao=2),
+        CampoNumerico(18, 'VL_ICMS_ST', precisao=2),
         Campo(19, 'IND_APUR'),
         Campo(20, 'CST_IPI'),
         Campo(21, 'COD_ENQ'),
-        CampoNumerico(22, 'VL_BC_IPI'),
-        CampoNumerico(23, 'ALIQ_IPI'),
-        CampoNumerico(24, 'VL_IPI'),
+        CampoNumerico(22, 'VL_BC_IPI', precisao=2),
+        CampoNumerico(23, 'ALIQ_IPI', precisao=2),
+        CampoNumerico(24, 'VL_IPI', precisao=2),
         CampoNumerico(25, 'CST_PIS', obrigatorio=True),
-        CampoNumerico(26, 'VL_BC_PIS'),
-        CampoNumerico(27, 'ALIQ_PIS'),         # 27 ALIQ_PIS em percentual
-        CampoNumerico(28, 'QUANT_BC_PIS'),
-        CampoNumerico(29, 'ALIQ_PIS_REAIS'),   # 27 ALIQ_PIS em reais: escolher nome diferente do nome do campo 27
-        CampoNumerico(30, 'VL_PIS'),
+        CampoNumerico(26, 'VL_BC_PIS', precisao=2),
+        CampoNumerico(27, 'ALIQ_PIS', precisao=4),         # 27 ALIQ_PIS em percentual
+        CampoNumerico(28, 'QUANT_BC_PIS', precisao=3),
+        CampoNumerico(29, 'ALIQ_PIS_REAIS', precisao=2),   # 27 ALIQ_PIS em reais: escolher nome diferente do nome do campo 27
+        CampoNumerico(30, 'VL_PIS', precisao=2),
         CampoNumerico(31, 'CST_COFINS', obrigatorio=True),
-        CampoNumerico(32, 'VL_BC_COFINS'),
-        CampoNumerico(33, 'ALIQ_COFINS'),       # 33 ALIQ_COFINS em percentual
-        CampoNumerico(34, 'QUANT_BC_COFINS'),
-        CampoNumerico(35, 'ALIQ_COFINS_REAIS'), # 35 ALIQ_COFINS em reais: escolher nome diferente do nome do campo 33
-        CampoNumerico(36, 'VL_COFINS'),
+        CampoNumerico(32, 'VL_BC_COFINS', precisao=2),
+        CampoNumerico(33, 'ALIQ_COFINS', precisao=4),       # 33 ALIQ_COFINS em percentual
+        CampoNumerico(34, 'QUANT_BC_COFINS', precisao=3),
+        CampoNumerico(35, 'ALIQ_COFINS_REAIS', precisao=4), # 35 ALIQ_COFINS em reais: escolher nome diferente do nome do campo 33
+        CampoNumerico(36, 'VL_COFINS', precisao=2),
         Campo(37, 'COD_CTA'),
-        CampoNumerico(38, 'VL_ABAT_NT'),
+        CampoNumerico(38, 'VL_ABAT_NT', precisao=2),
     ]
 
     nivel = 3
@@ -1085,7 +1085,7 @@ class RegistroC185(Registro):
 
 class RegistroC190(Registro):
     """
-    REGISTRO ANALÍTICO DO DOCUMENTO (CÓDIGO 01, 1B, 04 E 55)
+    REGISTRO ANALÍTICO DO DOCUMENTO (CÓDIGO 01, 1B, 04, 55 E 65)
     """
     campos = [
         CampoFixo(1, 'REG', 'C190'),
@@ -1119,7 +1119,7 @@ class RegistroC191(Registro):
 
 class RegistroC195(Registro):
     """
-    OBSERVAÇÕES DO LANÇAMENTO FISCAL (CÓDIGO 01, 1B E 55)
+    OBSERVAÇÕES DO LANÇAMENTO FISCAL (CÓDIGO 01, 1B, 55 e 65)
     """
     campos = [
         CampoFixo(1, 'REG', 'C195'),
