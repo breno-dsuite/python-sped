@@ -109,7 +109,7 @@ class Registro0100(Registro):
         Campo(11, 'FONE'),
         Campo(12, 'FAX'),
         Campo(13, 'EMAIL'),
-        CampoNumerico(14, 'COD_MUN'),
+        CampoNumerico(14, 'COD_MUN', tamanho=7),
     ]
 
     nivel = 2
