@@ -855,7 +855,7 @@ class RegistroC170(Registro):
         CampoNumerico(7, 'VL_ITEM', obrigatorio=True, precisao=2),
         CampoNumerico(8, 'VL_DESC', precisao=2),
         Campo(9, 'IND_MOV'),
-        CampoNumerico(10, 'CST_ICMS'),
+        CampoNumerico(10, 'CST_ICMS', tamanho=3),
         CampoNumerico(11, 'CFOP', obrigatorio=True),
         Campo(12, 'COD_NAT'),
         CampoNumerico(13, 'VL_BC_ICMS', precisao=2),
@@ -1089,7 +1089,7 @@ class RegistroC190(Registro):
     """
     campos = [
         CampoFixo(1, 'REG', 'C190'),
-        CampoNumerico(2, 'CST_ICMS'),
+        CampoNumerico(2, 'CST_ICMS', tamanho=3),
         CampoNumerico(3, 'CFOP'),
         CampoNumerico(4, 'ALIQ_ICMS', precisao=2),
         CampoNumerico(5, 'VL_OPR', precisao=2),
