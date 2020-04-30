@@ -215,7 +215,7 @@ class Registro0220(Registro):
     campos = [
         CampoFixo(1, 'REG', '0220'),
         Campo(2, 'UNID_CONV'),
-        Campo(3, 'FAT_CONV'),
+        CampoNumerico(3, 'FAT_CONV', precisao=6),
     ]
 
     nivel = 3
@@ -3159,7 +3159,7 @@ class RegistroK200(Registro):
         CampoFixo(1, 'REG', 'K200'),
         CampoData(2, 'DT_EST'),
         Campo(3, 'COD_ITEM'),
-        CampoNumerico(4, 'QTD'),
+        CampoNumerico(4, 'QTD', precisao=3),
         Campo(5, 'IND_EST'),
         Campo(6, 'COD_PART'),
     ]
