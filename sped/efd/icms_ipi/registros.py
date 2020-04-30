@@ -47,6 +47,18 @@ class Registro0001(Registro):
 
     nivel = 1
 
+
+class Registro0002(Registro):
+    """
+    CLASSIFICAÇÃO DO ESTABELECIMENTO INDUSTRIAL OU EQUIPARADO A INDUSTRIAL
+    """
+    campos = [
+        CampoFixo(1, 'REG', '0002'),
+        CampoNumerico(2, 'CLAS_ESTAB_IND', tamanho=2),
+    ]
+
+    nivel = 2
+
 class Registro0005(Registro):
     """
     DADOS COMPLEMENTARES DA ENTIDADE
