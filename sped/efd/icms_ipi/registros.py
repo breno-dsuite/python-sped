@@ -59,6 +59,7 @@ class Registro0002(Registro):
 
     nivel = 2
 
+
 class Registro0005(Registro):
     """
     DADOS COMPLEMENTARES DA ENTIDADE
