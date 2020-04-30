@@ -138,11 +138,12 @@ class CampoBool(Campo):
 
 class CampoNumerico(Campo):
     def __init__(self, indice, nome, obrigatorio=False,
-                 precisao=None, minimo=0, maximo=1000):
+                 precisao=0, minimo=0, maximo=1000, tamanho=0):
         super().__init__(indice, nome, obrigatorio)
-        self._precisao = precisao if precisao is not None else 0
+        self._precisao = precisao
         self._minimo = minimo
         self._maximo = maximo
+        self._tamanho = tamanho
 
     @property
     def precisao(self):
@@ -167,11 +168,11 @@ class CampoNumerico(Campo):
             valor = Decimal(valor.replace(',', '.'))
 
         if isinstance(valor, Decimal) or isinstance(valor, float):
-            super().set(registro, (('%.' + str(self._precisao) + 'f') % valor).replace('.', ','))
+            super().set(registro, (('%.' + str(self._precisao) + 'f') % valor).replace('.', ',').zfill(self._tamanho))
         elif isinstance(valor, int):
-            super().set(registro, str(valor))
+            super().set(registro, str(valor).zfill(self._tamanho))
         elif not valor:
-            super().set(registro, '0')
+            super().set(registro, '0'.zfill(self._tamanho))
         else:
             raise FormatoInvalidoError(registro, self.nome)
 
@@ -293,7 +294,7 @@ class CampoCPF(Campo):
             return False
 
         return True
-    
+
     @staticmethod
     def formatar(cpf):
         cpf = re.sub(r'\D', '', cpf)

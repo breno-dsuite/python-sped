@@ -577,7 +577,7 @@ class RegistroC100(Registro):
         Campo(3, 'IND_EMIT'),
         Campo(4, 'COD_PART'),
         Campo(5, 'COD_MOD'),
-        CampoNumerico(6, 'COD_SIT'),
+        CampoNumerico(6, 'COD_SIT', tamanho=2),
         Campo(7, 'SER'),
         CampoNumerico(8, 'NUM_DOC'),
         CampoChaveEletronica(9, 'CHV_NFE'),
