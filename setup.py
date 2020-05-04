@@ -4,7 +4,6 @@ from setuptools import setup, find_packages
 from setuptools.command.test import test as test_command
 from sped import __version__
 
-
 class PyTest(test_command):
     user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
 
@@ -25,9 +24,8 @@ class PyTest(test_command):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
-
 setup(
-    name='sped',
+    name='python-sped',
     packages=find_packages(exclude=['contrib', 'docs', 'test*']),
     include_package_data=True,
     package_data={
@@ -39,8 +37,8 @@ setup(
                      'Python.',
     author='Sergio Garcia',
     author_email='sergio@ginx.com.br',
-    url='https://github.com/sped-br/python-sped',
-    download_url='https://github.com/sped-br/python-sped/releases',
+    url='https://github.com/Trust-Code/python-sped',
+    download_url='https://github.com/Trust-Code/python-sped/releases',
     license='MIT',
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -50,14 +48,23 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     keywords='sped fiscal contábil contabilidade receita federal',
-    install_requires=['six'],
+    install_requires=['six','cchardet','xlsxwriter'], # 'numpy', 'pandas'
     tests_require=['pytest'],
     extras_require={
         'dev': ['pylint>=1.9.1'],
         'leiaute': [
             'jupyter>=1.0.0',
             'pyquery>=1.4.0',
+            #'numpy>=1.0.0',
+            #'pandas>=1.0.0',
         ]
     },
     cmdclass={'test': PyTest},
+
+    # https://stackoverflow.com/questions/4840182/setup-py-and-adding-file-to-bin
+    # scripts=['sped/relatorios/efd_relatorios'],
+
+    entry_points = {
+        'console_scripts': ['efd_relatorios=sped.relatorios.efd_relatorios:main']
+    },
 )

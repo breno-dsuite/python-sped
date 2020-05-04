@@ -84,7 +84,10 @@ class Escrituracao(object):
         self._add_registro(self._registro_escrituracao)
 
         sped_path = Path(__file__).parent
-        leiaute_ecd = Path(sped_path / 'leiautes' / f'{self._tipo}_{self._ano_calendario}.json')
+
+        leiaute_path = '%s/leiautes/%s_%s.json' % (sped_path, self._tipo,
+                                                   self._ano_calendario)
+        leiaute_ecd = Path(leiaute_path)
 
         with leiaute_ecd.open(encoding='utf-8', newline='\n') as f:
             p = json.load(f)
@@ -102,18 +105,18 @@ class Escrituracao(object):
                 regras = campo['regras']
                 tipo = campo['tipo']
                 obrigatorio = campo['obrigatorio']
-                
+
                 # Campos Fixo
                 m = re.match(r'"([a-z0-9]+)"', valores, re.IGNORECASE)
                 if m:
                     campos.append(CampoFixo(indice, nome, m.group(1)))
                     continue
-                
+
                 m = re.match(r'\[([a-z0-9]+)\]', valores, re.IGNORECASE)
                 if m:
                     campos.append(CampoFixo(indice, nome, m.group(1)))
                     continue
-                
+
                 # Campos Regex
                 m = re.match(r'\[([^\]]+)\]', valores)
                 if m:
@@ -124,12 +127,12 @@ class Escrituracao(object):
                     else:
                         campos.append(CampoRegex(indice, nome, obrigatorio=obrigatorio, regex='|'.join(valoresValidos)))
                         continue
-                
+
                 # Campos Data
-                if nome.startswith('DT_'):
+                if nome.startswith('DT_') or nome.startswith('DATA_'):
                     campos.append(CampoData(indice, nome, obrigatorio=obrigatorio))
                     continue
-                
+
                 # Campo CNPJ ou CPF
                 if 'REGRA_VALIDA_CNPJ' in regras and 'REGRA_VALIDA_CPF' in regras or nome == 'IDENT_CPF_CNPJ' or nome == 'CPF_CNPJ':
                     campos.append(CampoCPFouCNPJ(indice, nome, obrigatorio=obrigatorio))
@@ -226,19 +229,21 @@ class Escrituracao(object):
         self.registro_encerramento[2] = reg_count
 
     def write_to(self, buff):
-        buff.write(f'{self.registro_abertura}\r\n')
+        buff.write('%s\r\n' % self.registro_abertura)
         reg_count = 2
         for bloco in self._blocos.values():
             reg_count += len(bloco.registros)
             for registro in bloco.registros:
-                buff.write(f'{registro}\r\n')
+                buff.write('%s\r\n' % registro)
 
         self.registro_encerramento[2] = reg_count
 
-        buff.write(f'{self.registro_encerramento}\r\n')
+        buff.write('%s\r\n' % self.registro_encerramento)
 
     def add(self, registro: Registro):
         pass
 
     def __repr__(self):
-        return f'<{self.__class__.__module__}.{self.__class__.__name__}({self._tipo}, {self._ano_calendario})>'
+        return '<%s.%s(%s, %s)>' % (self.__class__.__module__,
+                                    self.__class__.__name__,
+                                    self._tipo, self._ano_calendario)

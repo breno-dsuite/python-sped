@@ -2,16 +2,16 @@
 
 from .registros import Registro
 
-
 class Bloco(object):
-    def __init__(self, nome):
+    def __init__(self, nome=''):
         self._nome = nome
         self._registros = []
-        self.registro_abertura = Registro()
-        self.registro_encerramento = Registro()
+        #self.registro_abertura = Registro()
+        #self.registro_encerramento = Registro()
 
     def __repr__(self):
-        return f'<{self.__class__.__module__}.{self.__class__.__name__}({self._nome})>'
+        return '<%s.%s(%s)>' % (self.__class__.__module__,
+                                self.__class__.__name__, self._nome)
 
     @property
     def abertura(self):
@@ -36,6 +36,4 @@ class Bloco(object):
 
     def add(self, registro):
         # Não adiciona o registro de abertura e fechamento
-        if not registro.__class__ == self.registro_abertura.__class__ and \
-           not registro.__class__ == self.registro_encerramento.__class__:
-            self._registros.append(registro)
+        self._registros.append(registro)

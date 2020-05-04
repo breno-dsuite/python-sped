@@ -1,8 +1,7 @@
 # SPED para python
 
-[![Build Status](https://travis-ci.org/sped-br/python-sped.svg "Build Status")](https://travis-ci.org/sped-br/python-sped)
-[![Coverage Status](https://coveralls.io/repos/sped-br/python-sped/badge.svg)](https://coveralls.io/r/sped-br/python-sped)
-[![Code Health](https://landscape.io/github/sped-br/python-sped/master/landscape.svg?style=flat)](https://landscape.io/github/sped-br/python-sped/master)
+[![Build Status](https://travis-ci.org/Trust-Code/python-sped.svg?branch=11.0)](https://travis-ci.org/Trust-Code/python-sped)
+[![Coverage Status](https://coveralls.io/repos/github/Trust-Code/python-sped/badge.svg?branch=11.0)](https://coveralls.io/github/Trust-Code/python-sped?branch=11.0)
 
 Biblioteca para geração dos arquivos do Sistema Público de Escrituração Digital (SPED) para Python.
 
@@ -12,10 +11,14 @@ Biblioteca para geração dos arquivos do Sistema Público de Escrituração Dig
 
   * python
   * six
+  * cchardet
+  * xlsxwriter
+  * numpy
+  * pandas
 
 ## Como instalar
 
-    $ pip install sped
+    $ pip install python-sped
 
 ## Objetivos do Projeto
 
